@@ -15,7 +15,7 @@ def build_parse_tree(exp: str) -> Binarytree:
             current_tree.insert_left('')
             pstack.push(current_tree)
             current_tree = current_tree.get_left_child()
-            
+
         elif i not in "+-*/)":
             current_tree.set_root_val(eval(i))
             parent = pstack.pop()
@@ -45,7 +45,36 @@ def evaluate(parse_tree: Binarytree) -> Number:
     else:
         return parse_tree.get_root_val()
 
+
+def postorder_eval(tree: Binarytree):
+    opers = {'+': operator.add, '-': operator.sub,
+             '*': operator.mul, '/': operator.truediv}
+
+    res1 = None
+    res2 = None
+
+    if tree:
+        res1 = postorder_eval(tree.get_left_child())
+        res2 = postorder_eval(tree.get_right_child())
+        if res1 and res2:
+            return opers[tree.get_root_val()](res1, res2)
+        else:
+            return tree.get_root_val()
+
+
+def print_exp(tree: Binarytree):
+    sval = ''
+    if tree:
+        if isinstance(tree.get_root_val(), str):
+            sval = '('+print_exp(tree.get_left_child())
+            sval = sval + str(tree.get_root_val())
+            sval = sval + print_exp(tree.get_right_child())+")"
+        else:
+            sval = sval + str(tree.get_root_val())
+    return sval
+
+
 if __name__ == "__main__":
     ptree = build_parse_tree(input(":"))
-    print(evaluate(ptree))
-    
+    print(postorder_eval(ptree))
+    print(print_exp(ptree))
