@@ -41,20 +41,23 @@ def par_checker(symbol_string: str) -> bool:
     else:
         return False
 
-def divid_by_2(decimal:int)->str:
-    string=''
-    s=Stack()
 
-    while decimal>0:
-        rem=decimal%2
+def divid_by_2(decimal: int) -> str:
+    string = ''
+    s = Stack()
+
+    while decimal > 0:
+        rem = decimal % 2
         s.push(rem)
-        decimal=decimal//2
-    
+        decimal = decimal//2
+
     while not s.is_empty():
-        string+=str(s.pop())
+        string += str(s.pop())
 
     return string
 
-while True:
-    s=input('input:')
-    print(divid_by_2(int(s)))
+
+if __name__ == "__main__":
+    while True:
+        s = input('input:')
+        print(divid_by_2(int(s)))
