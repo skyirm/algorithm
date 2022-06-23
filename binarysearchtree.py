@@ -82,6 +82,16 @@ class Treenode:
                     self.parent.right_child = self.right_child
                 self.right_child.parent = self.parent
 
+    def __iter__(self):
+        if self:
+            if self.has_left_child():
+                for item in self.left_child:
+                    yield item
+            yield self.key
+            if self.has_right_child():
+                for item in self.right_child:
+                    yield item
+
 
 class Binarysearchtree:
 
@@ -172,13 +182,13 @@ class Binarysearchtree:
             else:
                 current_node.parent.right_child = None
         elif current_node.has_both_child():
-            min_child=current_node.right_child.find_min()
+            min_child = current_node.right_child.find_min()
             if current_node.is_right_child():
-                min_child.left_child=current_node.left_child
-                current_node.parent.right_child=current_node.right_child
+                min_child.left_child = current_node.left_child
+                current_node.parent.right_child = current_node.right_child
             elif current_node.is_left_child():
-                min_child.left_child=current_node.left_child
-                current_node.parent.left_child=current_node.right_child
+                min_child.left_child = current_node.left_child
+                current_node.parent.left_child = current_node.right_child
         else:
             if current_node.has_left_child():
                 if current_node.is_left_child():
